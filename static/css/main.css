@@ -1,0 +1,318 @@
+.all {
+  background-color: #001a5a;
+  min-width: 1480px;
+  height: 100vh;
+  color: #ffffff;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.top {
+  display: flex;
+}
+
+.bgpic5 {
+  position: absolute;
+  top: 0;
+  left: 0px;
+  height: 80px;
+  width: auto;
+}
+
+.bgpic6 {
+  position: absolute;
+  top: 0;
+  right: 0px;
+  height: 80px;
+  width: auto;
+}
+
+.title1 {
+  font-size: 1.8rem;
+  color: #75f9fd;
+  margin: 0;
+}
+
+.tcenter {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.tleft {
+  color: #ffffff;
+  height: 80px;
+  width: 14rem;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  
+  img {
+    height: 1.5rem;
+    width: 1.8rem;
+    margin-right: 1rem;
+  }
+}
+
+.box {
+  border-radius: 16px;
+  border: 2px solid rgba(10, 67, 158, 1);
+  padding: 0.5rem;
+  margin: 0.5rem;
+}
+
+.boxhead {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  color: #fff;
+  font-weight: bold;
+  
+  img {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.3rem;
+  }
+}
+
+.flowbox {
+  border: 1px solid rgba(70, 169, 195, 1);
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem 0 0 0.5rem;
+}
+
+.flowbox2 {
+  border: 1px solid rgba(70, 169, 195, 1);
+  border-radius: 0.5rem;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem 0 0 0.5rem;
+}
+
+.flowall {
+
+}
+
+.flowboxtitle {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.flowboxnum {
+  color: #71eef3;
+  font-size: 2.3rem;
+  font-weight: bold
+}
+
+.flowboxnum2 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-left: 0.5rem;
+}
+
+#carTypeChart {
+  height: 10rem;
+  width: 100%;
+}
+
+#map {
+  width: 100%;
+  height: 30rem;
+}
+
+.cleft {
+  padding: 0 0 0 0.8rem;
+  
+}
+
+.ccenter {
+  padding: 0.5rem 0 0 0;
+}
+
+.cright {
+  padding: 0 0.8rem 0 0;
+}
+
+.realTimeVideo {
+  width: 100%;
+  /*height: 100%;*/
+  margin: 0.5rem 0 0 0;
+}
+
+.riskCarContent {
+  margin: 0 0;
+  
+  .colcss {
+    display: flex;
+    flex-direction: column;
+    /*justify-content: center;*/
+    align-items: center;
+    font-size: 0.8rem;
+    width: 90%;
+  }
+}
+
+.colcssimg {
+  height: 1.8rem;
+  width: 3rem;
+  border-radius: 0.2rem;
+  padding: 0.1rem;
+}
+
+.riskNum {
+  font-family: "Anta", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #71eef3;
+  font-size: 1.5rem;
+}
+
+#riskCountChart {
+  width: 100%;
+  height: 9.4rem;
+  /*background-color: #0dcaf0;*/
+}
+
+
+.dropBtnCss {
+  padding: 0.2rem 0.5rem;
+}
+
+
+.realTimeVideoHead {
+  display: flex;
+  justify-content: space-between;
+}
+
+.captionText {
+  color: #cccccc;
+  font-size: 0.6rem;
+}
+
+.videoName {
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  
+  img {
+    height: 2rem;
+    margin: 0 0.5rem;
+  }
+}
+
+.eventBox {
+  padding: 0.5rem 0.5rem 0.3rem 0.5rem;
+  margin: 0 0 0.5rem 0;
+  width: 99%;
+  border-radius: 0.5rem;
+}
+
+.myrow1 {
+  display: flex;
+  color: #eeeeee;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.optionImg {
+  height: 1.6rem;
+  background-color: #eff9fa;
+  padding: 0.05rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+
+.myrow2 {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(12, 103, 155, 0.99);
+  border-radius: 0.5rem;
+  
+  img {
+    border-radius: 0.5rem 0 0 0.5rem;
+    width: 30%
+  }
+}
+
+.myrow2right {
+  word-break: break-all;
+  padding: 0.2rem;
+}
+
+.myrow2title {
+  font-size: 0.8rem;
+  color: white;
+}
+
+.myrow2place {
+  font-size: 0.6rem;
+  color: #cccccc;
+}
+
+.myrow1l {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  
+  div {
+    margin-left: 0.2rem;
+    font-size: 0.95rem;
+  }
+}
+
+.custom-scroll {
+  max-height: 24.5rem;
+  overflow: auto; /* 如果内容溢出，显示滚动条 */
+}
+
+/* 自定义滚动条样式 */
+.custom-scroll::-webkit-scrollbar {
+  width: 0.2rem; /* 设置滚动条宽度 */
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(12, 103, 155, 0.99); /* 设置滚动条拖动块颜色 */
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background-color: #f0f0f0; /* 设置滚动条轨道颜色 */
+}
+
+.tablecss {
+  color: #eeeeee;
+  text-align: center;
+  width: 99%;
+}
+
+.normalText {
+  font-weight: bold;
+  color: #1bf847;
+}
+
+.highRiskText {
+  color: #f51919;
+}
+
+.mediumRiskText {
+  color: #f5ea5b;
+}
+
+.table2 {
+  font-size: 0.6rem;
+  
+  tbody tr td:nth-child(2) {
+    max-width: 14rem;
+  }
+}

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>高速云眼抛洒风险监测平台</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/main.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="all">
+  <div class="top row">
+    <img class="bgpic5" src="pic/bgpic5.png"/>
+    <img class="bgpic6" src="pic/bgpic6.png"/>
+    <div class="tleft col">
+      <img src="pic/cloud.png">
+      <div><span id="current-time"></span> &nbsp; {{ data.dayOfWeek }}</div>
+    </div>
+    <div class="col-8">
+      <div class="tcenter">
+        <h1 class="title1">高速云眼抛洒风险监测平台</h1>
+      </div>
+    </div>
+    <div class="col">
+      <div class="tright">
+      </div>
+    </div>
+  </div>
+  <div class="center row">
+    <div class="col cleft">
+      <div class="box">
+        <div class="boxhead">
+          <img src="pic/flow.png">
+          <div>流量统计</div>
+        </div>
+        <div class="boxcontent row">
+          <div class="flowbox col">
+            <div class="flowboxtitle">总流量</div>
+            <div class="flowboxnum">1913</div>
+          </div>
+          <div class="col">
+            <div class="flowbox2">
+              <div class="flowboxtitle text-danger">高风险</div>
+              <div class="flowboxnum2 text-danger">17</div>
+            </div>
+            <div class="flowbox2">
+              <div class="flowboxtitle text-warning">中风险</div>
+              <div class="flowboxnum2 text-warning">45</div>
+            </div>
+            <div class="flowbox2">
+              <div class="flowboxtitle text-info">低风险</div>
+              <div class="flowboxnum2 text-info">72</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="box">
+        <div class="boxhead">
+          <img src="pic/cartype.png">
+          <div>车型统计</div>
+        </div>
+        <div class="boxcontent">
+          <div id="carTypeChart"></div>
+        </div>
+      </div>
+      <div class="box">
+        <div class="boxhead">
+          <img src="pic/risk.png">
+          <div>风险车辆统计</div>
+        </div>
+        <div class="boxcontent row riskCarContent">
+          <div class="col colcss">
+            <div style="margin-top: 3.5rem">风险车辆数</div>
+            <div style="margin-top: 1.1rem">车型总数</div>
+          </div>
+          <div class="col colcss">
+            <img class="colcssimg" src="pic/Railed.png" style="background-color: #fdf035">
+            <div>平板式</div>
+            <div class="riskNum">56</div>
+            <div class="riskNum">295</div>
+          </div>
+          <div class="col colcss">
+            <img class="colcssimg" src="pic/Flatbed.png" style="background-color: #75b798">
+            <div>栏板式</div>
+            <div class="riskNum">48</div>
+            <div class="riskNum">152</div>
+          </div>
+        </div>
+        <div id="riskCountChart"></div>
+      </div>
+    </div>
+    <div class="col-6 ccenter">
+      <div id="map"></div>
+      <div class="row">
+        <div class="col box">
+          <div class="boxhead">
+            <img src="pic/camera.png">
+            <div>风险因素分析</div>
+          </div>
+          <div class="boxcontent" style="margin-top: 0.5rem">
+            <div id="myChart3" style="height: 10rem;width: 100%"></div>
+          </div>
+        </div>
+        <div class="col box">
+          <div class="boxhead">
+            <img src="pic/road.png">
+            <div>高风险路段</div>
+          </div>
+          <div class="boxcontent custom-scroll" style="max-height: 10rem;margin-top: 0.5rem">
+            <table class="table tablecss table2 table-bordered border-info table-sm align-middle">
+              <thead>
+              <tr style="color: #28f3f3">
+                <th scope="col">风险级别</th>
+                <th scope="col">路段地点</th>
+                <th scope="col">方向</th>
+                <th scope="col">更新时间</th>
+              </tr>
+              </thead>
+              <tbody class="table-group-divider">
+              <tr>
+                <th scope="row" class="highRiskText">高风险</th>
+                <td>成都绕城高速东段-路段K30+800</td>
+                <td>上行</td>
+                <td>02/24</td>
+              </tr>
+              <tr>
+                <th scope="row" class="highRiskText">高风险</th>
+                <td>G5京昆高速（成雅段）K1909+300</td>
+                <td>下行</td>
+                <td>02/24</td>
+              </tr>
+              <tr>
+                <th scope="row" class="mediumRiskText">中风险</th>
+                <td>S66-自隆高速-富顺站至互助枢纽门架-K032+922</td>
+                <td>下行</td>
+                <td>02/24</td>
+              </tr>
+              <tr>
+                <th scope="row" class="mediumRiskText">中风险</th>
+                <td>S8(成名高速)四川成都成名高速成温邛段成都高速运营管理有限公司K33+667</td>
+                <td>下行</td>
+                <td>02/24</td>
+              </tr>
+              <tr>
+                <th scope="row" class="mediumRiskText">中风险</th>
+                <td>G4215(蓉遵高速)成自泸泸赤段四川龙光泸贵高速公路有限公司K221+080(潮河-龙贯山门架赤成向)</td>
+                <td>上行</td>
+                <td>02/24</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col cright">
+      <div class="box">
+        <div class="realTimeVideoHead">
+          <div class="boxhead">
+            <img src="pic/roadCondition.png">
+            <div>实时路况</div>
+          </div>
+          <div class="dropdown" style="margin-right: 0.2rem">
+            <button class="btn btn-success dropdown-toggle dropBtnCss" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              G4202
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">G76</a></li>
+              <li><a class="dropdown-item" href="#">G85</a></li>
+              <li><a class="dropdown-item" href="#">G93</a></li>
+              <li><a class="dropdown-item" href="#">S33</a></li>
+              <li><a class="dropdown-item" href="#">S41</a></li>
+              <li><a class="dropdown-item" href="#">S80</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="boxcontent">
+          <div class="captionText">点击地图或下拉框切换摄像头画面</div>
+          <video autoplay muted loop class="realTimeVideo">
+            <source src="pic/test0.mp4" type="video/mp4">
+          </video>
+          <div class="videoName">
+            <img src="pic/G4202.png">
+            <div>
+              <div>G4202成都绕城高速</div>
+              <div class="captionText">四川-G4202-成都绕城高速东段-路段K30+800</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="box">
+        <div class="boxhead">
+          <img src="pic/event.png">
+          <div>风险事件</div>
+        </div>
+        <div class="boxcontent custom-scroll" style="margin-top: 0.5rem;max-height: 24.1rem">
+          <div class="eventBox bg-info bg-opacity-10 border border-info rounded-end">
+            <div class="myrow1">
+              <div class="myrow1l">
+                <img class="colcssimg" src="pic/Flatbed.png" style="background-color: #75b798">
+                <div>平板式</div>
+              </div>
+              <div>
+                <img class="optionImg" src="pic/location.png">
+                <img class="optionImg" src="pic/save.png">
+                <img class="optionImg" src="pic/message.png">
+                <img class="optionImg" src="pic/jump.png">
+              </div>
+            </div>
+            <div class="myrow2">
+              <img src="pic/crop1.jpg">
+              <div class="myrow2right">
+                <div class="myrow2title">平板式货车100%未遮盖篷布</div>
+                <div class="myrow2place">四川-G4202-成都绕城高速东段-路段K30+800</div>
+              </div>
+            </div>
+          </div>
+          <div class="eventBox bg-info bg-opacity-10 border border-info rounded-end">
+            <div class="myrow1">
+              <div class="myrow1l">
+                <img class="colcssimg" src="pic/Railed.png" style="background-color: #fdf035">
+                <div>栏板式</div>
+              </div>
+              <div>
+                <img class="optionImg" src="pic/location.png">
+                <img class="optionImg" src="pic/save.png">
+                <img class="optionImg" src="pic/message.png">
+                <img class="optionImg" src="pic/jump.png">
+              </div>
+            </div>
+            <div class="myrow2">
+              <img src="pic/crop2.jpg">
+              <div class="myrow2right">
+                <div class="myrow2title">栏板式货车100%未遮盖篷布</div>
+                <div class="myrow2place">
+                  G4215(蓉遵高速)成自泸泸赤段四川龙光泸贵高速公路有限公司K221+080(潮河-龙贯山门架赤成向)
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="eventBox bg-info bg-opacity-10 border border-info rounded-end">
+            <div class="myrow1">
+              <div class="myrow1l">
+                <img class="colcssimg" src="pic/Railed.png" style="background-color: #fdf035">
+                <div>栏板式</div>
+              </div>
+              <div>
+                <img class="optionImg" src="pic/location.png">
+                <img class="optionImg" src="pic/save.png">
+                <img class="optionImg" src="pic/message.png">
+                <img class="optionImg" src="pic/jump.png">
+              </div>
+            </div>
+            <div class="myrow2">
+              <img src="pic/crop3.jpg">
+              <div class="myrow2right">
+                <div class="myrow2title">栏板式货车100%未遮盖篷布</div>
+                <div class="myrow2place">
+                  S8(成名高速)四川成都成名高速成温邛段成都高速运营管理有限公司K33+667下行
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="eventBox bg-info bg-opacity-10 border border-info rounded-end">
+            <div class="myrow1">
+              <div class="myrow1l">
+                <img class="colcssimg" src="pic/Flatbed.png" style="background-color: #75b798">
+                <div>平板式</div>
+              </div>
+              <div>
+                <img class="optionImg" src="pic/location.png">
+                <img class="optionImg" src="pic/save.png">
+                <img class="optionImg" src="pic/message.png">
+                <img class="optionImg" src="pic/jump.png">
+              </div>
+            </div>
+            <div class="myrow2">
+              <img src="pic/crop1.jpg">
+              <div class="myrow2right">
+                <div class="myrow2title">平板式货车100%未遮盖篷布</div>
+                <div class="myrow2place">四川-G4202-成都绕城高速东段-路段K30+800</div>
+              </div>
+            </div>
+          </div>
+          <div class="eventBox bg-info bg-opacity-10 border border-info rounded-end">
+            <div class="myrow1">
+              <div class="myrow1l">
+                <img class="colcssimg" src="pic/Railed.png" style="background-color: #fdf035">
+                <div>栏板式</div>
+              </div>
+              <div>
+                <img class="optionImg" src="pic/location.png">
+                <img class="optionImg" src="pic/save.png">
+                <img class="optionImg" src="pic/message.png">
+                <img class="optionImg" src="pic/jump.png">
+              </div>
+            </div>
+            <div class="myrow2">
+              <img src="pic/crop2.jpg">
+              <div class="myrow2right">
+                <div class="myrow2title">栏板式货车100%未遮盖篷布</div>
+                <div class="myrow2place">
+                  G4215(蓉遵高速)成自泸泸赤段四川龙光泸贵高速公路有限公司K221+080(潮河-龙贯山门架赤成向)
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="eventBox bg-info bg-opacity-10 border border-info rounded-end">
+            <div class="myrow1">
+              <div class="myrow1l">
+                <img class="colcssimg" src="pic/Railed.png" style="background-color: #fdf035">
+                <div>栏板式</div>
+              </div>
+              <div>
+                <img class="optionImg" src="pic/location.png">
+                <img class="optionImg" src="pic/save.png">
+                <img class="optionImg" src="pic/message.png">
+                <img class="optionImg" src="pic/jump.png">
+              </div>
+            </div>
+            <div class="myrow2">
+              <img src="pic/crop3.jpg">
+              <div class="myrow2right">
+                <div class="myrow2title">栏板式货车100%未遮盖篷布</div>
+                <div class="myrow2place">
+                  S8(成名高速)四川成都成名高速成温邛段成都高速运营管理有限公司K33+667下行
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+<script src="js/jquery-3.6.4.min.js"></script>
+<script src="js/echarts.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=0HKOG2X2X9rW9MOdwlO5owKFDatvEgBt"></script>
+<script type="text/javascript" src="https://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+<script type="text/javascript" src="https://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
+<script src="js/main.js"></script>
+<script>
+  // 使用 jQuery 发送 AJAX 请求并更新页面上的时间
+  function updateTime() {
+    $.get('/get_time', function (data) {
+      $('#current-time').text(data.time);
+    });
+  }
+
+  updateTime();
+  // 每秒更新一次时间
+  setInterval(updateTime, 1000);
+</script>
+</body>
+</html>

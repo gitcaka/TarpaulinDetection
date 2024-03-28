@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Map</title>
+</head>
+<body>
+<div id="map" style="height: 100vh;width: 100vw;overflow: hidden"></div>
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=0HKOG2X2X9rW9MOdwlO5owKFDatvEgBt"></script>
+<script type="text/javascript" src="https://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+<script type="text/javascript" src="https://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
+<script>
+    var map = new BMap.Map("map");
+    map.setMapStyle({style: 'hardedge'})   //地图样式  高端灰风格(grayscale) 强边界风格(hardedge)
+    map.enableScrollWheelZoom(true);
+    var point = new BMap.Point(104.081826, 30.664519);
+    map.centerAndZoom(point, 12);
+
+    var traffic = new BMap.TrafficLayer();        // 创建交通流量图层实例
+    map.addTileLayer(traffic);
+    var markers = [];
+    var BASEDATA = [{
+        lnglat: [103.937352, 30.698559],
+        name: 'G5（京昆高速）成绵段K1768+500（路段）'
+    }, {
+        lnglat: [104.045149, 30.695081],
+        name: '四川-SA2-成都二绕东段-三岔湖服务区内4号'
+    }, {
+        lnglat: [104.096891, 30.626241],
+        name: 'G4217(蓉昌高速)四川成都蓉昌高速成灌段成都高速运营管理有限公司K14+950上行'
+    }, {
+        lnglat: [104.0394, 30.592922],
+        name: ''
+    }, {
+        lnglat: [103.958912, 30.614804],
+        name: ''
+    }, {
+        lnglat: [104.117876, 30.575014],
+        name: ''
+    }, {
+        lnglat: [104.138573, 30.61008],
+        name: ''
+    }, {
+        lnglat: [104.247232, 30.749968],
+        name: ''
+    }, {
+        lnglat: [104.192327, 30.771423],
+        name: ''
+    }, {
+        lnglat: [104.112702, 30.690678],
+        name: ''
+    }
+    ]
+
+    BASEDATA.forEach((item, index) => {
+        var point1 = new BMap.Point(item.lnglat[0], item.lnglat[1]);
+        var myIcon = new BMap.Icon("pic/camera_road.png", new BMap.Size(31, 37));
+        markers.push(new BMap.Marker(point1, {icon: myIcon}));
+    });
+
+    var markerClusterer = new BMapLib.MarkerClusterer(map, {markers: markers});
+</script>
+</body>
+</html>
