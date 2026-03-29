@@ -1,66 +1,81 @@
-.all {
-  background-color: #001a5a;
-  min-width: 1480px;
-  height: 100vh;
-  color: #ffffff;
-  max-height: 100vh;
-  overflow: hidden;
-}
+@charset "utf-8";
 
-.top {
-  display: flex;
-}
-
-.bgpic5 {
-  position: absolute;
-  top: 0;
-  left: 0px;
-  height: 80px;
-  width: auto;
-}
-
-.bgpic6 {
-  position: absolute;
-  top: 0;
-  right: 0px;
-  height: 80px;
-  width: auto;
-}
-
-.title1 {
-  font-size: 1.8rem;
-  color: #75f9fd;
+/* ================= 全局与防溢出设置 ================= */
+body, html {
   margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* 绝对禁止浏览器出现滚动条 */
 }
 
-.tcenter {
-  height: 80px;
+.dashboard-wrapper {
+  background-color: #001a5a;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.tleft {
+  flex-direction: column;
+  height: 100vh; /* 强制总高度 100% 视口 */
+  min-width: 1400px;
   color: #ffffff;
-  height: 80px;
-  width: 14rem;
-  display: flex;
-  justify-content: right;
-  align-items: center;
-  
-  img {
-    height: 1.5rem;
-    width: 1.8rem;
-    margin-right: 1rem;
-  }
 }
 
-.box {
-  border-radius: 16px;
+/* ================= 头部区域 ================= */
+.header {
+  height: 80px;
+  flex-shrink: 0; /* 头部固定高度，不允许挤压 */
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.bgpic5 { position: absolute; top: 0; left: 0; height: 100%; z-index: 1; }
+.bgpic6 { position: absolute; top: 0; right: 0; height: 100%; z-index: 1; }
+
+.tleft, .tcenter, .tright { z-index: 2; display: flex; align-items: center; }
+.tleft { justify-content: flex-start; padding-left: 2rem; }
+.tleft img { height: 1.5rem; width: 1.8rem; margin-right: 1rem; }
+.tcenter { justify-content: center; }
+.title1 { font-size: 1.8rem; color: #75f9fd; margin: 0; font-weight: bold; letter-spacing: 2px;}
+
+/* ================= 主体弹性网格布局 (解决溢出魔法) ================= */
+.main-layout {
+  flex: 1;
+  display: flex;
+  gap: 15px;
+  padding: 0 15px 15px 15px;
+  min-height: 0; /* 魔法属性：防止子元素把高度撑破屏幕 */
+}
+
+.panel-col {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  height: 100%;
+  min-height: 0;
+}
+.col-left { flex: 25; }
+.col-center { flex: 50; }
+.col-right { flex: 25; }
+
+/* 玻璃态面板 */
+.panel-box {
+  border-radius: 12px;
   border: 2px solid rgba(10, 67, 158, 1);
-  padding: 0.5rem;
-  margin: 0.5rem;
+  background: rgba(10, 25, 50, 0.4);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* 允许内部图表收缩 */
+}
+
+/* 按比例分配纵向空间 */
+.flex-1 { flex: 1; }
+.flex-15 { flex: 1.5; }
+.flex-2 { flex: 2; }
+
+.panel-content {
+  flex: 1;
+  min-height: 0; /* 嵌套的防溢出保护 */
+  display: flex;
+  flex-direction: column;
 }
 
 .boxhead {
@@ -69,250 +84,175 @@
   font-size: 1rem;
   color: #fff;
   font-weight: bold;
-  
-  img {
-    width: 1.5rem;
-    height: 1.5rem;
-    margin-right: 0.3rem;
-  }
+  margin-bottom: 8px;
 }
+.boxhead img { width: 1.5rem; height: 1.5rem; margin-right: 0.5rem; }
 
-.flowbox {
-  border: 1px solid rgba(70, 169, 195, 1);
-  border-radius: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  margin: 0.5rem 0 0 0.5rem;
-}
-
-.flowbox2 {
-  border: 1px solid rgba(70, 169, 195, 1);
-  border-radius: 0.5rem;
-  display: flex;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  margin: 0.5rem 0 0 0.5rem;
-}
-
-.flowall {
-
-}
-
-.flowboxtitle {
-  color: #fff;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-.flowboxnum {
-  color: #71eef3;
-  font-size: 2.3rem;
-  font-weight: bold
-}
-
-.flowboxnum2 {
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin-left: 0.5rem;
-}
-
-#carTypeChart {
-  height: 10rem;
+/* ================= 图表与自适应组件 ================= */
+.chart-container {
+  flex: 1;
   width: 100%;
+  min-height: 0;
+  position: relative;
+}
+/* 强行约束 Echarts 的 Canvas 不许越界 */
+.chart-container > div, .chart-container canvas {
+  width: 100% !important;
+  height: 100% !important;
 }
 
-#map {
+/* 视频区域防溢出绝对定位 */
+.video-wrapper {
+  position: relative;
   width: 100%;
-  height: 30rem;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(10, 67, 158, 1);
 }
-
-.cleft {
-  padding: 0 0 0 0.8rem;
-  
-}
-
-.ccenter {
-  padding: 0.5rem 0 0 0;
-}
-
-.cright {
-  padding: 0 0.8rem 0 0;
-}
-
 .realTimeVideo {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  /*height: 100%;*/
-  margin: 0.5rem 0 0 0;
+  height: 100%;
+  object-fit: cover; /* 保证视频填满容器且不拉伸变形 */
 }
 
-.riskCarContent {
-  margin: 0 0;
-  
-  .colcss {
-    display: flex;
-    flex-direction: column;
-    /*justify-content: center;*/
-    align-items: center;
-    font-size: 0.8rem;
-    width: 90%;
-  }
+/* ================= 全新优化的：流量统计板块 ================= */
+
+/* 左侧总流量能量牌 */
+.flow-total-card {
+  background: linear-gradient(135deg, rgba(0, 229, 255, 0.1) 0%, rgba(0, 229, 255, 0.02) 100%);
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  border-radius: 8px;
+  box-shadow: inset 0 0 20px rgba(0, 229, 255, 0.05);
+  position: relative;
+  /* 【关键修复】：移除了 overflow: hidden，防止文字被裁掉 */
 }
 
-.colcssimg {
-  height: 1.8rem;
-  width: 3rem;
-  border-radius: 0.2rem;
-  padding: 0.1rem;
+/* 顶部科幻光效扫描线 */
+.flow-total-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 2px;
+  background: linear-gradient(90deg, transparent, #00e5ff, transparent);
+  box-shadow: 0 0 10px #00e5ff;
 }
 
-.riskNum {
-  font-family: "Anta", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  color: #71eef3;
-  font-size: 1.5rem;
+.flow-label {
+  font-size: 0.9rem;
+  color: #bcc9d4;
+  margin-bottom: 4px;
+  white-space: nowrap; /* 【关键修复】：强制不换行 */
 }
 
-#riskCountChart {
-  width: 100%;
-  height: 9.4rem;
-  /*background-color: #0dcaf0;*/
+.flow-value {
+  font-size: 2.2rem; /* 【关键修复】：字体稍微缩小一点，防止小屏幕下把上下文字挤出去 */
+  font-weight: 900;
+  font-family: 'Anta', 'Arial', sans-serif;
+  line-height: 1.1;
+  margin-bottom: 4px;
 }
 
-
-.dropBtnCss {
-  padding: 0.2rem 0.5rem;
+.flow-trend {
+  font-size: 0.75rem;
+  color: #a0aec0;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  white-space: nowrap; /* 【关键修复】：强制不换行 */
 }
 
-
-.realTimeVideoHead {
-  display: flex;
-  justify-content: space-between;
+/* 右侧风险分级列表 */
+.flow-risk-list {
+  gap: 6px; /* 【关键修复】：缩小三个条目之间的垂直间距 */
+  justify-content: space-between; /* 消除上下多余的空白 */
 }
 
-.captionText {
-  color: #cccccc;
-  font-size: 0.6rem;
-}
-
-.videoName {
-  font-size: 0.8rem;
-  display: flex;
-  align-items: center;
-  
-  img {
-    height: 2rem;
-    margin: 0 0.5rem;
-  }
-}
-
-.eventBox {
-  padding: 0.5rem 0.5rem 0.3rem 0.5rem;
-  margin: 0 0 0.5rem 0;
-  width: 99%;
-  border-radius: 0.5rem;
-}
-
-.myrow1 {
-  display: flex;
-  color: #eeeeee;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.optionImg {
-  height: 1.6rem;
-  background-color: #eff9fa;
-  padding: 0.05rem;
-  border-radius: 0.3rem;
-  cursor: pointer;
-}
-
-.myrow2 {
-  margin-top: 0.5rem;
+.risk-item {
+  flex: 1;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background-color: rgba(12, 103, 155, 0.99);
-  border-radius: 0.5rem;
-  
-  img {
-    border-radius: 0.5rem 0 0 0.5rem;
-    width: 30%
-  }
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  padding: 0 10px; /* 【关键修复】：取消上下内边距，完全由 flex 居中 */
+  min-height: 0; /* 【关键修复】：允许盒子在极端情况下被压缩，防止溢出 */
+  transition: all 0.3s ease;
+  cursor: default;
 }
 
-.myrow2right {
-  word-break: break-all;
-  padding: 0.2rem;
+/* 悬浮微动效：轻微右移变亮 */
+.risk-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateX(4px);
 }
 
-.myrow2title {
-  font-size: 0.8rem;
-  color: white;
+/* LED 发光指示灯 */
+.risk-dot {
+  width: 6px; /* 稍微缩小指示灯 */
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 8px;
 }
 
-.myrow2place {
-  font-size: 0.6rem;
-  color: #cccccc;
-}
-
-.myrow1l {
-  display: flex;
-  align-items: center;
+.risk-name {
+  flex: 1;
+  font-size: 0.85rem; /* 稍微缩小文字 */
   font-weight: bold;
-  
-  div {
-    margin-left: 0.2rem;
-    font-size: 0.95rem;
-  }
+  white-space: nowrap; /* 强制不换行 */
 }
 
+.risk-val {
+  font-size: 1.3rem; /* 【关键修复】：从 1.6rem 缩小到 1.3rem，防止把盒子撑高 */
+  font-family: 'Anta', 'Arial', sans-serif;
+  font-weight: bold;
+  line-height: 1; /* 【关键修复】：把行高压到极限，不留上下空隙 */
+}
+
+/* 高中低三级专属配色与霓虹阴影 */
+.high-risk { color: #f51919; border-color: rgba(245, 25, 25, 0.2); }
+.high-risk .risk-dot { background: #f51919; box-shadow: 0 0 8px #f51919; }
+
+.warn-risk { color: #f5ea5b; border-color: rgba(245, 234, 91, 0.2); }
+.warn-risk .risk-dot { background: #f5ea5b; box-shadow: 0 0 8px #f5ea5b; }
+
+.low-risk { color: #00e5ff; border-color: rgba(0, 229, 255, 0.2); }
+.low-risk .risk-dot { background: #00e5ff; box-shadow: 0 0 8px #00e5ff; }
+
+/* 风险车辆统计底部原有类名保留 */
+.colcssimg { height: 1.8rem; width: 3rem; border-radius: 0.2rem; padding: 0.1rem; }
+.riskNum { font-family: "Anta", sans-serif; color: #71eef3; font-size: 1.5rem; line-height: 1.2; }
+
+/* ================= 自定义内滚动条 ================= */
 .custom-scroll {
-  max-height: 24.5rem;
-  overflow: auto; /* 如果内容溢出，显示滚动条 */
+  flex: 1;
+  overflow-y: auto; /* 超出自动显示滚动条 */
+  padding-right: 5px;
 }
+.custom-scroll::-webkit-scrollbar { width: 4px; }
+.custom-scroll::-webkit-scrollbar-thumb { background-color: rgba(70, 169, 195, 0.8); border-radius: 2px;}
+.custom-scroll::-webkit-scrollbar-track { background-color: transparent; }
 
-/* 自定义滚动条样式 */
-.custom-scroll::-webkit-scrollbar {
-  width: 0.2rem; /* 设置滚动条宽度 */
-}
+/* ================= 列表与杂项 ================= */
+.realTimeVideoHead { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;}
+.dropBtnCss { padding: 0.2rem 0.5rem; font-size: 0.8rem; }
+.captionText { color: #cccccc; font-size: 0.65rem; }
+.videoName { font-size: 0.85rem; display: flex; align-items: center; }
 
-.custom-scroll::-webkit-scrollbar-thumb {
-  background-color: rgba(12, 103, 155, 0.99); /* 设置滚动条拖动块颜色 */
-}
+.eventBox { padding: 8px; margin-bottom: 8px; width: 100%; border-radius: 0.5rem; }
+.myrow1 { display: flex; color: #eeeeee; align-items: center; justify-content: space-between; }
+.myrow1l { display: flex; align-items: center; font-weight: bold; }
+.myrow1l div { margin-left: 0.4rem; font-size: 0.9rem; }
+.optionImg { height: 1.5rem; background-color: #eff9fa; padding: 2px; border-radius: 0.3rem; cursor: pointer; margin-left: 5px;}
 
-.custom-scroll::-webkit-scrollbar-track {
-  background-color: #f0f0f0; /* 设置滚动条轨道颜色 */
-}
+.myrow2 { margin-top: 0.5rem; display: flex; background-color: rgba(12, 103, 155, 0.99); border-radius: 0.5rem; overflow: hidden;}
+.myrow2 img { width: 30%; object-fit: cover; }
+.myrow2right { padding: 6px; }
+.myrow2title { font-size: 0.8rem; color: white; font-weight: bold; margin-bottom: 4px;}
+.myrow2place { font-size: 0.65rem; color: #cccccc; line-height: 1.2;}
 
-.tablecss {
-  color: #eeeeee;
-  text-align: center;
-  width: 99%;
-}
-
-.normalText {
-  font-weight: bold;
-  color: #1bf847;
-}
-
-.highRiskText {
-  color: #f51919;
-}
-
-.mediumRiskText {
-  color: #f5ea5b;
-}
-
-.table2 {
-  font-size: 0.6rem;
-  
-  tbody tr td:nth-child(2) {
-    max-width: 14rem;
-  }
-}
+.tablecss { color: #eeeeee; text-align: center; width: 100%; font-size: 0.75rem; margin: 0; }
+.highRiskText { color: #f51919 !important; font-weight: bold;}
+.mediumRiskText { color: #f5ea5b !important; font-weight: bold;}

@@ -1,7 +1,19 @@
 from flask import Flask, render_template
 from datetime import datetime
+import os
+import qianfan
 
 app = Flask(__name__, static_folder="static", static_url_path='')
+os.environ["QIANFAN_ACCESS_KEY"] = "55328311494648ecbf20356becf63090"
+os.environ["QIANFAN_SECRET_KEY"] = "7ef1d5f9af0c4e2987c8793a2b4a899d"
+chat_comp = qianfan.ChatCompletion()
+
+def chat(content):
+    resp = chat_comp.do(model="ERNIE-3.5-128K", messages=[{
+        "role": "user",
+        "content": content
+    }])
+    return resp["body"]
 
 @app.route('/')
 def hello_world():

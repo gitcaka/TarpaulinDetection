@@ -1,264 +1,125 @@
-//  echarts      #########################################################################
-var myChart = echarts.init(document.getElementById('carTypeChart'));
-var option = {
-  tooltip: {
-    trigger: 'item'
-  },
-  legend: {
-    orient: 'vertical',
-    right: 0,
-    textStyle: {
-      color: '#fff'
-    }
-  },
+// ================= ECharts 初始化与配置 =================
+var chart1 = echarts.init(document.getElementById('carTypeChart'));
+var option1 = {
+  tooltip: { trigger: 'item' },
+  legend: { orient: 'vertical', right: 10, top: 'center', textStyle: { color: '#bcc9d4' } },
   series: [
     {
       type: 'pie',
-      radius: ['50%', '90%'],
-      right: 100,
+      radius: ['50%', '80%'],
+      center: ['35%', '50%'], // 偏左放置，给图例留空间
       avoidLabelOverlap: false,
-      itemStyle: {
-        borderRadius: 4,
-        borderColor: '#fff',
-        borderWidth: 2
-      },
-      label: {
-        show: false,
-        position: 'center'
-      },
-      emphasis: {
-        label: {
-          show: true,
-          fontSize: 10,
-          fontWeight: 'bold'
-        }
-      },
-      labelLine: {
-        show: false
-      },
+      itemStyle: { borderColor: '#030f26', borderWidth: 2 },
+      label: { show: false, position: 'center' },
+      emphasis: { label: { show: true, fontSize: 14, fontWeight: 'bold', color: '#fff' } },
+      labelLine: { show: false },
       data: [
-        {value: 1048, name: '厢式货车'},
-        {value: 735, name: '栏板式货车'},
-        {value: 580, name: '平板货车'},
-        {value: 484, name: '罐车'},
-        {value: 300, name: '公共汽车'},
-        {value: 1300, name: '小汽车'}
+        {value: 1048, name: '厢式货车'}, {value: 735, name: '栏板式'},
+        {value: 580, name: '平板货车'}, {value: 484, name: '罐车'},
+        {value: 300, name: '公共汽车'}, {value: 1300, name: '小汽车'}
       ]
     }
   ]
 };
-option && myChart.setOption(option);
+chart1.setOption(option1);
 
-var myChart2 = echarts.init(document.getElementById('riskCountChart'));
+var chart2 = echarts.init(document.getElementById('riskCountChart'));
 var option2 = {
   color: ['#fdf035', '#75b798'],
-  tooltip: {
-    trigger: 'axis'
-  },
-  legend: {
-    show: false,
-    data: ['平板式', '栏板式']
-  },
-  grid: {
-    top: 10,
-    bottom: 20
-  },
+  tooltip: { trigger: 'axis' },
+  grid: { top: 20, bottom: 20, left: 30, right: 10 },
   xAxis: {
     type: 'category',
     boundaryGap: false,
-    data: ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
-    axisLine: {
-      lineStyle: {
-        color: '#ffffff'
-      }
-    },
-    axisLabel: {
-      fontSize: 10
-    }
+    data: ["一", "二", "三", "四", "五", "六", "日"],
+    axisLine: { lineStyle: { color: 'rgba(255,255,255,0.3)' } },
+    axisLabel: { color: '#bcc9d4', fontSize: 10 }
   },
   yAxis: {
     type: 'value',
-    axisLine: {
-      lineStyle: {
-        color: '#ffffff'
-      }
-    },
-    axisLabel: {
-      fontSize: 10
-    }
+    splitLine: { lineStyle: { color: 'rgba(255,255,255,0.1)', type: 'dashed' } },
+    axisLabel: { color: '#bcc9d4', fontSize: 10 }
   },
   series: [
-    {
-      name: '平板式',
-      type: 'line',
-      data: [20, 32, 10, 34, 90, 30, 10]
-    },
-    {
-      name: '栏板式',
-      type: 'line',
-      data: [20, 82, 91, 24, 65, 6, 44]
-    }
+    { name: '平板式', type: 'line', smooth: true, data: [20, 32, 10, 34, 90, 30, 10], areaStyle: { opacity: 0.1 } },
+    { name: '栏板式', type: 'line', smooth: true, data: [20, 82, 91, 24, 65, 6, 44], areaStyle: { opacity: 0.1 } }
   ]
 };
-option2 && myChart2.setOption(option2);
+chart2.setOption(option2);
 
-
-var myChart3 = echarts.init(document.getElementById('myChart3'));
+var chart3 = echarts.init(document.getElementById('myChart3'));
 var option3 = {
-  tooltip: {
-    trigger: 'item',
-    formatter: '{b}: {c} ({d}%)'
-  },
-  legend: {
-    data: [
-      'Direct',
-      'Marketing',
-      'Search Engine',
-      'Email',
-      'Union Ads',
-      'Video Ads',
-      'Baidu',
-      'Google',
-      'Bing',
-      'Others'
-    ],
-    show: false
-  },
+  tooltip: { trigger: 'item', formatter: '{b}: {c} ({d}%)' },
   series: [
     {
       type: 'pie',
-      radius: [0, '70%'],
-      label: {
-        position: 'inner',
-        fontSize: 9,
-      },
+      radius: [0, '45%'],
+      label: { position: 'inner', fontSize: 10, color: '#fff' },
       data: [
-        {value: 2, name: '车辆类型'},
-        {value: 3, name: '篷布条件'},
-        {value: 1, name: '道路环境'},
-        {value: 1, name: '气候条件'}
+        {value: 2, name: '车辆'}, {value: 3, name: '篷布'},
+        {value: 1, name: '道路'}, {value: 1, name: '气候'}
       ]
     },
     {
       type: 'pie',
-      radius: ['70%', '100%'],
-      labelLine: {
-        length: 5
-      },
-      label: {
-        formatter: '{b|{b}：}{d}%',
-        backgroundColor: '#F6F8FC',
-        borderColor: '#8C8D8E',
-        borderWidth: 1,
-        borderRadius: 4,
-        padding: [1, 1],
-        rich: {
-          b: {
-            color: '#4C5058',
-            fontSize: 10,
-            fontWeight: 'bold',
-            lineHeight: 15
-          },
-          per: {
-            color: '#fff',
-            backgroundColor: '#4C5058',
-            padding: [1, 0, 1, 1],
-            borderRadius: 4
-          }
-        }
-      },
+      radius: ['55%', '85%'],
+      label: { color: '#bcc9d4', fontSize: 10 },
       data: [
-        {value: 0.6, name: '平板式'},
-        {value: 0.6, name: '仓栅式'},
-        {value: 0.8, name: '其他'},
-        {value: 0.6, name: '未覆盖且货物多'},
-        {value: 0.9, name: '未覆盖且货物适中'},
-        {value: 0.6, name: '未覆盖且货物少'},
-        {value: 0.9, name: '覆盖篷布'},
-        {value: 1, name: '道路环境'},
-        {value: 1, name: '气候条件'}
+        {value: 0.6, name: '平板'}, {value: 0.6, name: '仓栅'}, {value: 0.8, name: '其他'},
+        {value: 0.6, name: '无盖货多'}, {value: 0.9, name: '无盖适中'}, {value: 0.6, name: '无盖少'},
+        {value: 0.9, name: '覆盖篷布'}, {value: 1, name: '道路环境'}, {value: 1, name: '气候条件'}
       ]
     }
   ]
 };
-option3 && myChart3.setOption(option3);
+chart3.setOption(option3);
 
-
-//   百度地图     #########################################################################
-var map = new BMap.Map("map");
-map.setMapStyle({style: 'hardedge'})   //地图样式  高端灰风格(grayscale) 强边界风格(hardedge)
-map.enableScrollWheelZoom(true);
-var point = new BMap.Point(104.081826, 30.664519);
-// 浏览器定位
-// var geolocation = new BMap.Geolocation();
-// geolocation.getCurrentPosition(function (r) {
-//     if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-//         var mk = new BMap.Marker(r.point);
-//         map.addOverlay(mk);
-//         map.panTo(r.point);
-//         point = r.point;
-//         // alert('您的位置：' + r.point.lng + ',' + r.point.lat);
-//     }
-// })
-
-map.centerAndZoom(point, 12);
-
-var traffic = new BMap.TrafficLayer();        // 创建交通流量图层实例
-map.addTileLayer(traffic);
-var markers = [];
-var BASEDATA = [{
-  lnglat: [103.937352, 30.698559],
-  name: 'G5（京昆高速）成绵段K1768+500（路段）'
-}, {
-  lnglat: [104.045149, 30.695081],
-  name: '四川-SA2-成都二绕东段-三岔湖服务区内4号'
-}, {
-  lnglat: [104.096891, 30.626241],
-  name: 'G4217(蓉昌高速)四川成都蓉昌高速成灌段成都高速运营管理有限公司K14+950上行'
-}, {
-  lnglat: [104.0394, 30.592922],
-  name: ''
-}, {
-  lnglat: [103.958912, 30.614804],
-  name: ''
-}, {
-  lnglat: [104.117876, 30.575014],
-  name: ''
-}, {
-  lnglat: [104.138573, 30.61008],
-  name: ''
-}, {
-  lnglat: [104.247232, 30.749968],
-  name: ''
-}, {
-  lnglat: [104.192327, 30.771423],
-  name: ''
-}, {
-  lnglat: [104.112702, 30.690678],
-  name: ''
-}, {
-  lnglat: [104.030201, 30.650104],
-  name: ''
-}
-]
-
-BASEDATA.forEach((item, index) => {
-  var point1 = new BMap.Point(item.lnglat[0], item.lnglat[1]);
-  var point_red = new BMap.Icon("pic/point_red.png", new BMap.Size(32, 32));
-  var point_yellow = new BMap.Icon("pic/point_yellow.png", new BMap.Size(32, 32));
-  var point_blue = new BMap.Icon("pic/point_blue.png", new BMap.Size(32, 32));
-  let r = Math.random();
-  if (r <= 0.5) {
-    markers.push(new BMap.Marker(point1, {icon: point_blue}));
-  } else {
-    if (0.5 < r <= 0.8) {
-      markers.push(new BMap.Marker(point1, {icon: point_yellow}));
-    } else {
-      if (r > 0.8) {
-        markers.push(new BMap.Marker(point1, {icon: point_red}));
-      }
-    }
-  }
+// 监听窗口大小变化，让所有图表自适应缩放 (重要优化！)
+window.addEventListener('resize', function() {
+    chart1.resize();
+    chart2.resize();
+    chart3.resize();
 });
 
-var markerClusterer = new BMapLib.MarkerClusterer(map, {markers: markers});
+
+// ================= 百度地图 GL 初始化 =================
+var map = new BMapGL.Map("map");
+map.enableScrollWheelZoom(true);
+// 改为使用百度官方预设的高级暗色科技主题 midnight (更契合大屏)
+map.setMapStyleV2({ styleJson: [{"featureType":"water","elementType":"all","stylers":{"color":"#021019"}},{"featureType":"highway","elementType":"geometry.fill","stylers":{"color":"#000000"}},{"featureType":"highway","elementType":"geometry.stroke","stylers":{"color":"#147a92"}},{"featureType":"arterial","elementType":"geometry.fill","stylers":{"color":"#000000"}},{"featureType":"arterial","elementType":"geometry.stroke","stylers":{"color":"#0b3d51"}},{"featureType":"local","elementType":"geometry","stylers":{"color":"#000000"}},{"featureType":"land","elementType":"all","stylers":{"color":"#08304b"}},{"featureType":"railway","elementType":"geometry.fill","stylers":{"color":"#000000"}},{"featureType":"railway","elementType":"geometry.stroke","stylers":{"color":"#08304b"}},{"featureType":"subway","elementType":"geometry","stylers":{"lightness":-70}},{"featureType":"building","elementType":"geometry.fill","stylers":{"color":"#000000"}},{"featureType":"all","elementType":"labels.text.fill","stylers":{"color":"#857f7f"}},{"featureType":"all","elementType":"labels.text.stroke","stylers":{"color":"#000000"}},{"featureType":"building","elementType":"geometry","stylers":{"color":"#022338"}},{"featureType":"green","elementType":"geometry","stylers":{"color":"#062032"}},{"featureType":"boundary","elementType":"all","stylers":{"color":"#1e1c1c"}},{"featureType":"manmade","elementType":"geometry","stylers":{"color":"#022338"}}] });
+
+var point = new BMapGL.Point(103.939975, 30.682317);
+map.centerAndZoom(point, 14);
+
+// 点位初始化 (精简循环代码)
+var point_blue = new BMapGL.Icon("pic/point_blue.png", new BMapGL.Size(32, 32));
+var point_red = new BMapGL.Icon("pic/point_red.png", new BMapGL.Size(32, 32));
+
+var BASEDATA = [
+  [103.937352, 30.698559], [104.045149, 30.695081], [103.907636, 30.701695],
+  [104.0394, 30.592922], [103.958912, 30.614804], [104.117876, 30.575014],
+  [104.138573, 30.61008], [104.247232, 30.749968], [104.192327, 30.771423],
+  [104.112702, 30.690678], [104.030201, 30.650104]
+];
+
+BASEDATA.forEach(coord => {
+  map.addOverlay(new BMapGL.Marker(new BMapGL.Point(coord[0], coord[1]), {icon: point_blue}));
+});
+
+// 模拟事件：7.5秒后变成红点
+var dynamicMarker = new BMapGL.Marker(new BMapGL.Point(103.94055, 30.682441), {icon: point_blue});
+map.addOverlay(dynamicMarker);
+setTimeout(function () {
+  map.removeOverlay(dynamicMarker);
+  map.addOverlay(new BMapGL.Marker(new BMapGL.Point(103.94055, 30.682441), {icon: point_red}));
+
+  // 模拟线图层变红
+  $('#videoTitle').text('G4202成都绕城高速(高风险)').removeClass('text-white').addClass('text-danger fw-bold');
+}, 7500);
+
+// 【重要修正】：监听窗口尺寸变化，防止 Echarts 在弹性布局中比例失调
+window.addEventListener('resize', function() {
+  if(myChart) myChart.resize();
+  if(myChart2) myChart2.resize();
+  if(myChart3) myChart3.resize();
+});
