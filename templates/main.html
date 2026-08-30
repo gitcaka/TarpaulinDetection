@@ -1,274 +1,207 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>高速云眼抛洒风险监测平台</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/main.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#07111d">
+  <title>高速云眼 · 道路环境感知系统</title>
+  <link rel="icon" href="{{ url_for('static', filename='pic/cloud.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 <body>
-<div class="dashboard-wrapper">
-  <header class="header row m-0">
-    <img class="bgpic5" src="pic/bgpic5.png"/>
-    <img class="bgpic6" src="pic/bgpic6.png"/>
-    <div class="tleft col">
-      <img src="pic/cloud.png">
-      <div><span id="current-time"></span> &nbsp; {{ data.dayOfWeek }}</div>
-    </div>
-    <div class="col-8 tcenter">
-      <h1 class="title1">道路环境感知系统</h1>
-    </div>
-    <div class="col tright"></div>
-  </header>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="topbar__meta" aria-label="当前时间">
+        <img src="{{ url_for('static', filename='pic/cloud.png') }}" alt="" aria-hidden="true">
+        <div>
+          <span class="eyebrow">SYSTEM TIME</span>
+          <div class="topbar__clock">
+            <time id="currentTime">--:--:--</time>
+            <span>{{ data.dayOfWeek }}</span>
+          </div>
+        </div>
+      </div>
 
-  <main class="main-layout">
-    <aside class="panel-col col-left">
-      <div class="panel-box flex-1">
-        <div class="boxhead">
-          <img src="pic/flow.png"><div>流量统计</div>
-        </div>
-        <div class="panel-content d-flex h-100" style="gap: 10px; min-height: 0;">
-          <div class="flow-total-card flex-1 d-flex flex-column align-items-center justify-content-center p-2">
-            <div class="flow-label">今日总流量 (辆)</div>
-            <div id="totalNum" class="flow-value text-glow">1913</div>
-            <div class="flow-trend">较昨日 <span class="text-success fw-bold">↑ 5.2%</span></div>
-          </div>
+      <div class="brand">
+        <span class="brand__kicker">HIGHWAY VISION · CONTROL CENTER</span>
+        <h1>道路环境感知系统</h1>
+      </div>
 
-          <div class="flow-risk-list flex-1 d-flex flex-column justify-content-around">
-            <div class="risk-item high-risk">
-              <span class="risk-dot"></span><span class="risk-name">高风险</span><span class="risk-val" id="highRiskNum">17</span>
-            </div>
-            <div class="risk-item warn-risk">
-              <span class="risk-dot"></span><span class="risk-name">中风险</span><span class="risk-val" id="warnRiskNum">45</span>
-            </div>
-            <div class="risk-item low-risk">
-              <span class="risk-dot"></span><span class="risk-name">低风险</span><span class="risk-val" id="lowRiskNum">72</span>
-            </div>
-          </div>
-        </div>
+      <div class="topbar__status" aria-label="系统状态">
+        <span class="status-chip"><i></i><span id="runtimeStatusLabel">系统初始化中</span></span>
+        <span id="mapStatusLabel" class="status-chip status-chip--muted">地图检测中</span>
       </div>
-      <div class="panel-box flex-1">
-        <div class="boxhead">
-          <img src="pic/cartype.png"><div>车型统计</div>
-        </div>
-        <div class="panel-content">
-          <div id="carTypeChart" class="chart-container"></div>
-        </div>
-      </div>
-      <div class="panel-box flex-15">
-        <div class="boxhead">
-          <img src="pic/risk.png"><div>风险车辆统计</div>
-        </div>
-        <div class="panel-content d-flex flex-column">
-          <div class="row riskCarContent m-0 align-items-center mb-2">
-            <div class="col colcss text-center">
-              <div class="mt-2 text-secondary" style="font-size: 0.85rem;">风险车辆数</div>
-              <div class="mt-1 text-secondary" style="font-size: 0.85rem;">车型总数</div>
-            </div>
-            <div class="col colcss text-center">
-              <img class="colcssimg" src="pic/Railed.png" style="background-color: #fdf035">
-              <div class="mt-1">平板式</div>
-              <div class="riskNum">56</div>
-              <div class="riskNum text-muted" style="font-size: 1.1rem">295</div>
-            </div>
-            <div class="col colcss text-center">
-              <img class="colcssimg" src="pic/Flatbed.png" style="background-color: #75b798">
-              <div class="mt-1">栏板式</div>
-              <div class="riskNum">48</div>
-              <div class="riskNum text-muted" style="font-size: 1.1rem">152</div>
-            </div>
-          </div>
-          <div id="riskCountChart" class="chart-container flex-1"></div>
-        </div>
-      </div>
-    </aside>
+    </header>
 
-    <section class="panel-col col-center">
-      <div class="panel-box flex-2 p-0" style="border: none;">
-        <div id="map" style="width: 100%; height: 100%; border-radius: 12px; border: 2px solid rgba(10, 67, 158, 1);"></div>
-      </div>
-      <div class="center-bottom-row flex-1 d-flex mt-3" style="gap: 15px;">
-        <div class="panel-box flex-1 m-0">
-          <div class="boxhead">
-            <img src="pic/camera.png"><div>风险因素分析</div>
-          </div>
-          <div class="panel-content">
-            <div id="myChart3" class="chart-container"></div>
-          </div>
-        </div>
-        <div class="panel-box flex-1 m-0">
-          <div class="boxhead">
-            <img src="pic/road.png"><div>高风险路段</div>
-          </div>
-          <div class="panel-content custom-scroll mt-2">
-            <table class="table tablecss table2 table-bordered border-info table-sm align-middle m-0">
-              <thead>
-              <tr style="color: #28f3f3"><th>风险级别</th><th>路段地点</th><th>方向</th><th>时间</th></tr>
-              </thead>
-              <tbody class="table-group-divider">
-              <tr><th class="highRiskText">高风险</th><td>成都绕城高速东段...</td><td>上行</td><td>05/24</td></tr>
-              <tr><th class="highRiskText">高风险</th><td>G5京昆高速...</td><td>下行</td><td>05/24</td></tr>
-              <tr><th class="mediumRiskText">中风险</th><td>S66-自隆高速...</td><td>下行</td><td>05/24</td></tr>
-              <tr><th class="mediumRiskText">中风险</th><td>S8(成名高速)...</td><td>下行</td><td>05/24</td></tr>
-              <tr><th class="mediumRiskText">中风险</th><td>G4215(蓉遵高速)...</td><td>上行</td><td>05/24</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
+    <main class="dashboard-grid">
+      <section class="column column--left" aria-label="统计概览">
+        <article class="panel panel--flow">
+          <header class="panel__header">
+            <div class="panel__title">
+              <img src="{{ url_for('static', filename='pic/flow.png') }}" alt="">
+              <div><span>TRAFFIC FLOW</span><h2>流量统计</h2></div>
+            </div>
+            <span class="panel__tag">实时</span>
+          </header>
 
-    <aside class="panel-col col-right">
-      <div class="panel-box flex-1">
-        <div class="realTimeVideoHead">
-          <div class="boxhead"><img src="pic/roadCondition.png"><div>实时路况</div></div>
-          <div class="dropdown">
-            <button class="btn btn-success btn-sm dropdown-toggle dropBtnCss" type="button" data-bs-toggle="dropdown" aria-expanded="false">G4202</button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">G76</a></li><li><a class="dropdown-item" href="#">G85</a></li>
-            </ul>
+          <div class="flow-overview">
+            <div class="flow-total">
+              <span>今日总流量</span>
+              <strong id="totalNum">1913</strong>
+              <small>辆 · 较昨日 <b>↑ 5.2%</b></small>
+            </div>
+            <div class="risk-metrics">
+              <div class="risk-metric risk-metric--high">
+                <i></i><span>高风险</span><strong id="highRiskNum">17</strong>
+              </div>
+              <div class="risk-metric risk-metric--medium">
+                <i></i><span>中风险</span><strong id="mediumRiskNum">45</strong>
+              </div>
+              <div class="risk-metric risk-metric--low">
+                <i></i><span>低风险</span><strong id="lowRiskNum">72</strong>
+              </div>
+            </div>
           </div>
+        </article>
+
+        <article class="panel">
+          <header class="panel__header">
+            <div class="panel__title">
+              <img src="{{ url_for('static', filename='pic/cartype.png') }}" alt="">
+              <div><span>VEHICLE PROFILE</span><h2>车型统计</h2></div>
+            </div>
+            <span class="panel__tag">今日</span>
+          </header>
+          <div id="carTypeChart" class="chart" role="img" aria-label="车型占比环形图"></div>
+        </article>
+
+        <article class="panel panel--risk-trend">
+          <header class="panel__header">
+            <div class="panel__title">
+              <img src="{{ url_for('static', filename='pic/risk.png') }}" alt="">
+              <div><span>RISK TREND</span><h2>风险车辆统计</h2></div>
+            </div>
+            <span class="panel__tag">近 7 日</span>
+          </header>
+          <div class="vehicle-summary">
+            <div class="vehicle-summary__label"><span>风险 / 总数</span></div>
+            <div class="vehicle-summary__item">
+              <img src="{{ url_for('static', filename='pic/Flatbed.png') }}" alt="平板式货车">
+              <div><span>平板式</span><strong>56</strong><small>/ 295</small></div>
+            </div>
+            <div class="vehicle-summary__item">
+              <img src="{{ url_for('static', filename='pic/Railed.png') }}" alt="栏板式货车">
+              <div><span>栏板式</span><strong>48</strong><small>/ 152</small></div>
+            </div>
+          </div>
+          <div id="riskCountChart" class="chart chart--grow" role="img" aria-label="近七日风险车辆趋势图"></div>
+        </article>
+      </section>
+
+      <section class="column column--center" aria-label="地图与风险分析">
+        <article class="panel panel--map">
+          <header class="panel__header panel__header--overlay">
+            <div class="panel__title">
+              <img src="{{ url_for('static', filename='pic/camera_road.png') }}" alt="">
+              <div><span>ROAD NETWORK</span><h2>风险路网态势</h2></div>
+            </div>
+            <a class="panel__link" href="{{ url_for('map_view') }}" target="_blank" rel="noopener">全屏地图 ↗</a>
+          </header>
+          <div class="map-shell">
+            <div id="map" class="map-canvas" aria-label="成都市高速公路风险点位地图"></div>
+            <div id="mapFallback" class="map-fallback" hidden></div>
+            <div class="map-legend" aria-label="地图图例">
+              <span><i class="map-dot map-dot--normal"></i>正常点位</span>
+              <span><i class="map-dot map-dot--risk"></i>风险点位</span>
+            </div>
+          </div>
+        </article>
+
+        <div class="center-lower">
+          <article class="panel">
+            <header class="panel__header">
+              <div class="panel__title">
+                <img src="{{ url_for('static', filename='pic/camera.png') }}" alt="">
+                <div><span>RISK FACTORS</span><h2>风险因素分析</h2></div>
+              </div>
+            </header>
+            <div id="riskFactorChart" class="chart" role="img" aria-label="风险因素双层饼图"></div>
+          </article>
+
+          <article class="panel">
+            <header class="panel__header">
+              <div class="panel__title">
+                <img src="{{ url_for('static', filename='pic/road.png') }}" alt="">
+                <div><span>HIGH-RISK ROADS</span><h2>高风险路段</h2></div>
+              </div>
+              <span class="panel__tag panel__tag--danger">5 条</span>
+            </header>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>级别</th><th>路段地点</th><th>方向</th><th>日期</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="level level--high">高</span></td><td>成都绕城高速东段</td><td>上行</td><td>05/24</td></tr>
+                  <tr><td><span class="level level--high">高</span></td><td>G5 京昆高速</td><td>下行</td><td>05/24</td></tr>
+                  <tr><td><span class="level level--medium">中</span></td><td>S66 自隆高速</td><td>下行</td><td>05/24</td></tr>
+                  <tr><td><span class="level level--medium">中</span></td><td>S8 成名高速</td><td>下行</td><td>05/24</td></tr>
+                  <tr><td><span class="level level--medium">中</span></td><td>G4215 蓉遵高速</td><td>上行</td><td>05/24</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
         </div>
-        <div class="panel-content d-flex flex-column">
-          <div class="captionText text-end mb-1">点击地图或下拉框切换摄像头</div>
-          <div class="video-wrapper flex-1">
-            <video autoplay muted loop class="realTimeVideo">
-              <source src="pic/test2.mp4" type="video/mp4">
+      </section>
+
+      <section class="column column--right" aria-label="视频与风险事件">
+        <article class="panel panel--video">
+          <header class="panel__header">
+            <div class="panel__title">
+              <img src="{{ url_for('static', filename='pic/roadCondition.png') }}" alt="">
+              <div><span>LIVE CAMERA</span><h2>实时路况</h2></div>
+            </div>
+            <label class="camera-select">
+              <span class="sr-only">选择摄像头</span>
+              <select id="cameraSelect">
+                <option value="g4202">G4202</option>
+                <option value="g76">G76</option>
+                <option value="g85">G85</option>
+              </select>
+            </label>
+          </header>
+          <div class="video-frame">
+            <video id="roadVideo" autoplay muted loop playsinline poster="{{ url_for('static', filename='pic/crop.png') }}">
+              <source src="{{ url_for('static', filename='pic/test2.mp4') }}" type="video/mp4">
             </video>
+            <span class="live-badge"><i></i>LIVE</span>
+            <span class="video-hint">点击地图点位或选择路段切换视频</span>
           </div>
-          <div class="videoName mt-2">
-            <img src="pic/G4202.png" style="height: 2.2rem;">
+          <div class="camera-meta">
+            <img id="videoBadge" src="{{ url_for('static', filename='pic/G4202.png') }}" alt="G4202 路段标识">
             <div>
-              <div id="videoTitle" style="font-weight:bold;">G4202成都绕城高速</div>
-              <div class="captionText">G4202(成都绕城高速)四川成都绕西段四川川西高速有限责任公司K57+350</div>
+              <strong id="videoTitle">G4202 成都绕城高速</strong>
+              <p id="videoDescription">成都绕城高速西段 K57+350 演示摄像头</p>
             </div>
           </div>
-        </div>
-      </div>
+        </article>
 
-      <div class="panel-box flex-15">
-        <div class="boxhead">
-          <img src="pic/event.png"><div>风险事件</div>
-        </div>
-        <div id="riskEvent" class="panel-content mt-2" style="overflow: hidden;">
-          </div>
-      </div>
-    </aside>
-  </main>
-</div>
+        <article class="panel panel--events">
+          <header class="panel__header">
+            <div class="panel__title">
+              <img src="{{ url_for('static', filename='pic/event.png') }}" alt="">
+              <div><span>ALERT STREAM</span><h2>风险事件</h2></div>
+            </div>
+            <span class="pulse-label"><i></i>持续监测</span>
+          </header>
+          <div id="riskEvent" class="event-feed" aria-live="polite" aria-label="实时风险事件列表"></div>
+        </article>
+      </section>
+    </main>
+  </div>
 
-<script src="js/jquery-3.6.4.min.js"></script>
-<script src="js/echarts.min.js"></script>
-<script src="js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" src="https://api.map.baidu.com/api?v=1.0&&type=webgl&ak=0HKOG2X2X9rW9MOdwlO5owKFDatvEgBt"></script>
-<script src="js/main.js"></script>
-<script>
-  // ================= 1. AJAX 获取时间 =================
-  function updateTime() {
-    $.get('/get_time', function (data) { $('#current-time').text(data.time); });
-  }
-  updateTime();
-  setInterval(updateTime, 1000);
-
-
-  // ================= 2. 丰富的大屏模拟数据池 =================
-  const vehicleTypes = [
-    { name: '平板式', img: 'pic/Flatbed.png', color: '#75b798' },
-    { name: '栏板式', img: 'pic/Railed.png', color: '#fdf035' },
-    { name: '厢式货车', img: 'pic/Flatbed.png', color: '#6fb3e0' },
-    { name: '危化品车', img: 'pic/Railed.png', color: '#d15b47' },
-    { name: '小客车', img: 'pic/Flatbed.png', color: '#b3b3b3' }
-  ];
-
-  const eventTitles = [
-    { title: '货车100%未遮盖篷布', level: 'text-danger' },
-    { title: '货物散落/抛洒高风险预警', level: 'text-danger' },
-    { title: '应急车道违规停车', level: 'text-warning' },
-    { title: '车辆超速行驶(120km/h+)', level: 'text-warning' },
-    { title: '非机动车/行人误入高速', level: 'text-danger' },
-    { title: '异常低速/交通拥堵预警', level: 'text-info' },
-    { title: '疲劳驾驶/分心驾驶预警', level: 'text-warning' }
-  ];
-
-  const locations = [
-    '四川-G4202-成都绕城高速东段-K30+800',
-    'G4215成自泸高速-潮河门架-赤成向',
-    'S8成名高速-成温邛段-K33+667',
-    'G5京昆高速-成绵段-K1768+500',
-    'S2成巴高速-金堂段-K45+200',
-    'G42沪蓉高速-成南段-K198+100'
-  ];
-
-  // 这里复用你原有的三张截图，每次随机抽取
-  const cropImages = ['pic/crop1.jpg', 'pic/crop2.jpg', 'pic/crop3.jpg'];
-
-  // 生成一条随机预警事件的 HTML
-  function getRandomEventHtml() {
-    const v = vehicleTypes[Math.floor(Math.random() * vehicleTypes.length)];
-    const e = eventTitles[Math.floor(Math.random() * eventTitles.length)];
-    const l = locations[Math.floor(Math.random() * locations.length)];
-    const img = cropImages[Math.floor(Math.random() * cropImages.length)];
-
-    return `
-      <div class="eventBox">
-        <div class="myrow1">
-          <div class="myrow1l">
-            <img class="colcssimg" src="${v.img}" style="background-color: ${v.color}">
-            <div>${v.name}</div>
-          </div>
-          <div>
-            <img class="optionImg" src="pic/location.png">
-            <img class="optionImg" src="pic/save.png">
-            <img class="optionImg" src="pic/message.png">
-            <img class="optionImg" src="pic/jump.png">
-          </div>
-        </div>
-        <div class="myrow2">
-          <img src="${img}">
-          <div class="myrow2right">
-            <div class="myrow2title ${e.level} fw-bold">${e.title}</div>
-            <div class="myrow2place">${l}</div>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  // ================= 3. 动态平滑滚动与数据更新 =================
-
-  const $riskEventContainer = $('#riskEvent');
-
-  // 页面刚加载时，先悄悄铺满 4 条数据垫底
-  for(let i = 0; i < 4; i++) {
-    $riskEventContainer.append(getRandomEventHtml());
-  }
-
-  // 核心动效：每隔 2.5 秒平滑推入一条新预警事件
-  setInterval(() => {
-    // 随机仪表盘数字变动
-    if (Math.random() < 0.5) $('#warnRiskNum').text(parseInt($('#warnRiskNum').text()) + 1);
-
-    // 1. 生成新节点并先隐藏 (hide)
-    const $newItem = $(getRandomEventHtml()).hide();
-
-    // 2. 插入到顶部，并通过 slideDown 平滑展开，制造把整体往“下”挤的滚动视觉差
-    $riskEventContainer.prepend($newItem);
-    $newItem.slideDown(500);
-
-    // 3. 保持列表长度不超过 6 条。底部多余的旧数据平滑淡出并删除，保持页面不卡顿
-    if ($riskEventContainer.children('.eventBox').length > 6) {
-      $riskEventContainer.children('.eventBox:last').fadeOut(400, function() {
-        $(this).remove();
-      });
-    }
-  }, 2500);
-
-  // 其他仪表盘背景数据跳动
-  setInterval(() => { $('#totalNum').text(parseInt($('#totalNum').text()) + 1); }, 500);
-  setInterval(() => { if (Math.random() < 0.5) $('#lowRiskNum').text(parseInt($('#lowRiskNum').text()) + 1); }, 500);
-  setInterval(() => { if (Math.random() < 0.3) $('#highRiskNum').text(parseInt($('#highRiskNum').text()) + 1); }, 1000);
-</script>
+  <script src="{{ url_for('static', filename='js/echarts.min.js') }}"></script>
+  {% if baidu_map_ak %}
+  <script src="https://api.map.baidu.com/api?v=1.0&type=webgl&ak={{ baidu_map_ak | urlencode }}"></script>
+  {% endif %}
+  <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
