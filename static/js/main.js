@@ -27,7 +27,12 @@ function bootstrapDashboard() {
   const metrics = createMetrics(INITIAL_METRICS);
   disposables.push(metrics);
 
-  disposables.push({ dispose: createClock(requireElement("currentTime")) });
+  disposables.push({
+    dispose: createClock(
+      requireElement("currentTime"),
+      document.body.dataset.timeEndpoint || "",
+    ),
+  });
 
   const camera = createCameraController({
     select: requireElement("cameraSelect"),

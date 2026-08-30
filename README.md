@@ -74,6 +74,17 @@ python app.py
 - 风险事件卡片使用 DOM API 构造，避免把动态内容拼接为 HTML。
 - 演示视频和事件数据来自 `static/pic` 与 `data.js`，不能作为真实检测结果使用。
 
+## GitHub Pages
+
+仓库包含 `.github/workflows/pages.yml`，推送到 `master` 后会自动：
+
+1. 安装 Flask 构建依赖；
+2. 使用 `scripts/build_pages.py` 将两个 Jinja 页面导出为静态 HTML；
+3. 适配项目站点子路径并上传 Pages 构建产物；
+4. 部署到 `https://gitcaka.github.io/HighwayVisionDashboard/`。
+
+在线地图的浏览器 AK 通过仓库 Actions Secret `BAIDU_MAP_AK` 注入。GitHub Pages 只发布静态演示，服务器时间接口会自动切换为浏览器本地时间；本地 Flask 运行方式不变。
+
 ## 安全提示
 
 如果密钥曾被提交到 Git，单纯从当前文件删除并不能让旧密钥恢复安全：必须在对应平台控制台撤销或轮换密钥，并视仓库公开范围决定是否清理 Git 历史。

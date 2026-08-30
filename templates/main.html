@@ -8,7 +8,7 @@
   <link rel="icon" href="{{ url_for('static', filename='pic/cloud.png') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
-<body>
+<body data-time-endpoint="{{ time_endpoint }}">
   <div class="app-shell">
     <header class="topbar">
       <div class="topbar__meta" aria-label="当前时间">

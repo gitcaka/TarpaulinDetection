@@ -1,11 +1,13 @@
 import { pickRandom } from "./data.js";
 
+const assetUrl = (filename) => new URL(`../../pic/${filename}`, import.meta.url).href;
+
 function setText(id, value) {
   const element = document.getElementById(id);
   if (element) element.textContent = String(value);
 }
 
-export function createClock(element) {
+export function createClock(element, endpoint = "") {
   let clock = new Date();
 
   const render = () => {
@@ -13,8 +15,9 @@ export function createClock(element) {
   };
 
   const synchronize = async () => {
+    if (!endpoint) return;
     try {
-      const response = await fetch("/get_time", { headers: { Accept: "application/json" } });
+      const response = await fetch(endpoint, { headers: { Accept: "application/json" } });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const { time } = await response.json();
       const [hours, minutes, seconds] = time.split(":").map(Number);
@@ -27,16 +30,17 @@ export function createClock(element) {
     }
   };
 
+  render();
   synchronize();
   const tickTimer = window.setInterval(() => {
     clock = new Date(clock.getTime() + 1000);
     render();
   }, 1000);
-  const syncTimer = window.setInterval(synchronize, 60000);
+  const syncTimer = endpoint ? window.setInterval(synchronize, 60000) : null;
 
   return () => {
     window.clearInterval(tickTimer);
-    window.clearInterval(syncTimer);
+    if (syncTimer) window.clearInterval(syncTimer);
   };
 }
 
@@ -106,9 +110,9 @@ function createEventCard(pool) {
   const actions = document.createElement("div");
   actions.className = "event-card__actions";
   actions.append(
-    iconButton("/pic/location.png", "定位事件"),
-    iconButton("/pic/save.png", "保存事件"),
-    iconButton("/pic/jump.png", "查看详情"),
+    iconButton(assetUrl("location.png"), "定位事件"),
+    iconButton(assetUrl("save.png"), "保存事件"),
+    iconButton(assetUrl("jump.png"), "查看详情"),
   );
   header.append(vehicleMeta, actions);
 

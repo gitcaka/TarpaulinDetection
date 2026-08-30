@@ -1,3 +1,5 @@
+const assetUrl = (filename) => new URL(`../../pic/${filename}`, import.meta.url).href;
+
 export const INITIAL_METRICS = Object.freeze({
   total: 1913,
   high: 17,
@@ -46,8 +48,8 @@ export const CAMERAS = Object.freeze([
     code: "G4202",
     title: "G4202 成都绕城高速",
     description: "成都绕城高速西段 K57+350 演示摄像头",
-    video: "/pic/test2.mp4",
-    badge: "/pic/G4202.png",
+    video: assetUrl("test2.mp4"),
+    badge: assetUrl("G4202.png"),
     coord: [103.94055, 30.682441],
   },
   {
@@ -55,8 +57,8 @@ export const CAMERAS = Object.freeze([
     code: "G76",
     title: "G76 厦蓉高速",
     description: "厦蓉高速成都段演示摄像头",
-    video: "/pic/test1.mp4",
-    badge: "/pic/G4202.png",
+    video: assetUrl("test1.mp4"),
+    badge: assetUrl("G4202.png"),
     coord: [104.045149, 30.695081],
   },
   {
@@ -64,8 +66,8 @@ export const CAMERAS = Object.freeze([
     code: "G85",
     title: "G85 银昆高速",
     description: "银昆高速成都段演示摄像头",
-    video: "/pic/test0.mp4",
-    badge: "/pic/G4202.png",
+    video: assetUrl("test0.mp4"),
+    badge: assetUrl("G4202.png"),
     coord: [103.937352, 30.698559],
   },
 ]);
@@ -86,10 +88,10 @@ export const MAP_POINTS = Object.freeze([
 
 export const EVENT_POOL = Object.freeze({
   vehicles: [
-    { name: "平板式", image: "/pic/Flatbed.png", color: "#75b798" },
-    { name: "栏板式", image: "/pic/Railed.png", color: "#fdf035" },
-    { name: "厢式货车", image: "/pic/Flatbed.png", color: "#6fb3e0" },
-    { name: "危化品车", image: "/pic/Railed.png", color: "#d15b47" },
+    { name: "平板式", image: assetUrl("Flatbed.png"), color: "#75b798" },
+    { name: "栏板式", image: assetUrl("Railed.png"), color: "#fdf035" },
+    { name: "厢式货车", image: assetUrl("Flatbed.png"), color: "#6fb3e0" },
+    { name: "危化品车", image: assetUrl("Railed.png"), color: "#d15b47" },
   ],
   events: [
     { title: "货车未遮盖篷布", level: "high", label: "高风险" },
@@ -107,7 +109,7 @@ export const EVENT_POOL = Object.freeze({
     "S2 成巴高速金堂段 K45+200",
     "G42 沪蓉高速成南段 K198+100",
   ],
-  images: ["/pic/crop1.jpg", "/pic/crop2.jpg", "/pic/crop3.jpg"],
+  images: [assetUrl("crop1.jpg"), assetUrl("crop2.jpg"), assetUrl("crop3.jpg")],
 });
 
 export function pickRandom(items) {

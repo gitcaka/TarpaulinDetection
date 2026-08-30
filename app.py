@@ -7,7 +7,7 @@ from datetime import datetime
 from typing import Optional
 
 from dotenv import load_dotenv
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 
 
 WEEKDAYS = ("星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日")
@@ -25,6 +25,7 @@ def create_app(test_config: Optional[dict] = None) -> Flask:
     app = Flask(__name__, static_folder="static", static_url_path="")
     app.config.from_mapping(
         BAIDU_MAP_AK=os.getenv("BAIDU_MAP_AK", "").strip(),
+        STATIC_EXPORT=False,
     )
 
     if test_config:
@@ -36,6 +37,7 @@ def create_app(test_config: Optional[dict] = None) -> Flask:
             "main.html",
             data={"dayOfWeek": WEEKDAYS[datetime.now().weekday()]},
             baidu_map_ak=app.config["BAIDU_MAP_AK"],
+            time_endpoint="" if app.config["STATIC_EXPORT"] else url_for("get_time"),
         )
 
     @app.get("/map_view")

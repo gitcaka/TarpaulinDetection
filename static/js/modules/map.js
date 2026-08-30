@@ -11,6 +11,8 @@ const MAP_STYLE = [
   { featureType: "all", elementType: "labels.text.stroke", stylers: { color: "#07111d" } },
 ];
 
+const assetUrl = (filename) => new URL(`../../pic/${filename}`, import.meta.url).href;
+
 function showFallback(element, message) {
   if (!element) return;
   element.textContent = message;
@@ -43,8 +45,8 @@ export function createRoadMap({
     map.enableScrollWheelZoom(true);
     map.setMapStyleV2({ styleJson: MAP_STYLE });
 
-    const blueIcon = new window.BMapGL.Icon("/pic/point_blue.png", new window.BMapGL.Size(32, 32));
-    const redIcon = new window.BMapGL.Icon("/pic/point_red.png", new window.BMapGL.Size(32, 32));
+    const blueIcon = new window.BMapGL.Icon(assetUrl("point_blue.png"), new window.BMapGL.Size(32, 32));
+    const redIcon = new window.BMapGL.Icon(assetUrl("point_red.png"), new window.BMapGL.Size(32, 32));
 
     points.forEach(({ coord, cameraId }) => {
       const marker = new window.BMapGL.Marker(
