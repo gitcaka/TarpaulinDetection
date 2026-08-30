@@ -1,5 +1,7 @@
 # 高速云眼抛洒风险监测平台
 
+[🚀 在线演示](https://gitcaka.github.io/HighwayVisionDashboard/) · [📦 GitHub 仓库](https://github.com/gitcaka/HighwayVisionDashboard)
+
 一个基于 Flask、原生 ES Modules、ECharts 与百度地图 GL 的智慧交通可视化大屏。项目展示车辆流量、车型分布、风险趋势、道路点位、监控视频和动态风险事件。
 
 > 当前仓库是前端大屏与模拟数据演示，不包含 YOLO/OpenCV 检测模型、视频推理流水线、数据库或真实告警接口。接入真实检测服务时，可用后端 API 或 WebSocket 替换 `static/js/modules/data.js` 和模拟定时器。
